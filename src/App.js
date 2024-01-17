@@ -8,8 +8,10 @@ function App() {
   const [transactions, setTransactions] = useState('');
   
   useEffect(() => {
-    getTransactions().then(setTransactions())
-  },[])
+    getTransactions().then((transactions) => {
+      setTransactions(transactions);
+    })
+  },[name])
   
   const getTransactions = async () => {
     const url = process.env.REACT_APP_API_URL + '/transactions';
@@ -19,7 +21,7 @@ function App() {
   const addNewTransaction = (ev) => {
     ev.preventDefault();
     const url = process.env.REACT_APP_API_URL + '/transaction';
-    const price = name.split('')[0];
+    const price = name.split(' ')[0];
     fetch(url, {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
@@ -38,9 +40,19 @@ function App() {
       })
     })
   }
+
+  let balance = 0;
+  for (const transaction of transactions) {
+    balance = balance + transaction.price;
+  }
+
+  balance = balance.toFixed(2);
+  const fraction = balance.split('.')[1];
+  balance = balance.split('.')[0];
   return (
     <main>
-      <h1>$400<span>.00</span></h1>
+      <h1>Simple Money Tracker</h1>
+      <h1>Balance: ${balance}<span>{fraction}</span></h1>
       <form onSubmit={addNewTransaction}>
         <div className = "basic">
           <input type="text"
@@ -67,7 +79,7 @@ function App() {
             <div className="description">{transaction.description}</div>
           </div>
           <div className="right">
-              <div className={"price" + (transaction.price < 0) ? 'red' : 'green'}>
+              <div className={"price " + (transaction.price<0?'red' : 'green')}>
                 {transaction.price}
               </div>
             <div className="datetime">{transaction.datetime}</div>

@@ -15,6 +15,14 @@ h1 {
   text-align: center;
   color: #fff;
   margin: 0;
+  font-size: 2.5rem;
+}
+
+h1 span {
+  font-size: 1rem;
+  vertical-align: top;
+  display: inline-block;
+  margin-top: 6px;
 }
 
 form {
@@ -22,6 +30,7 @@ form {
 }
 
 form input {
+  height: 50px;
   width: 100%;
   background-color: transparent;
   color: #ddd;
@@ -51,6 +60,9 @@ form button {
 
 div.transactions_container {
   margin-top: 15px;
+  height: 250px;
+  overflow-y: scroll;
+  padding: 15px;
 }
 
 div.transaction {
